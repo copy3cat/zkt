@@ -157,7 +157,7 @@ check_logs_all() {
                 for ((i=1; i<=node_count - 1; i ++))
                 do
                 echo "-----------------------------------------------------"
-                        str1="开始查询节点topmining_zktube_"
+                        str1="开始查询节点zktube_"
                         str2=${i}
                         str3="日志: "
                         echo ${str1}${str2}${str3}
