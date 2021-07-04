@@ -95,9 +95,9 @@ deploy_zktnode() {
                         do
                                 echo "-----------------------------------------------------"
                                 echo "开始部署专供zkTube新节点: "
-                                docker run -d -v ~/zktube/.revenue_address:/revenue_address --restart always --name topmining_zktube_${i} topmininglabs/zktube-prover:latest
+                                docker run -d -v ~/zktube/.revenue_address:/revenue_address --restart always --name zktube_${i} topmininglabs/zktube-prover:latest
                                 echo "-----------------------------------------------------"
-                                str1="zkTube节点topmining_zktube_"
+                                str1="zkTube节点zktube_"
                                 str2=${i}
                                 str3="已部署完成!"
                                 echo ${str1}${str2}${str3}
@@ -116,7 +116,7 @@ check_revenue_address() {
 }
 
 check_zktnode_status() {
-        node_count=`docker ps --filter="name=topmining_zktube_" | wc -l`
+        node_count=`docker ps --filter="name=zktube_" | wc -l`
         if [ ${node_count} = "0" ]; then
                 echo "-----------------------------------------------------"
             echo "尚未部署专供zkTube节点,请部署后再执行此操作!"
@@ -124,12 +124,12 @@ check_zktnode_status() {
         else
                 echo "-----------------------------------------------------"
                 echo "当前专供zkTube节点运行状态如下: "
-                docker ps --filter="name=topmining_zktube_"
+                docker ps --filter="name=zktube_"
         fi
 }
 
 check_logs_single() {
-        node_count=`docker ps --filter="name=topmining_zktube_" | wc -l`
+        node_count=`docker ps --filter="name=zktube_" | wc -l`
         if [ ${node_count} = "0" ]; then
                 echo "-----------------------------------------------------"
             echo "尚未部署专供zkTube节点,请部署后再执行此操作!"
@@ -138,16 +138,16 @@ check_logs_single() {
                 echo "-----------------------------------------------------"
                 read -p "请输入要查看的zkTube节点序号: " node_number
                 read -p "请输入要查看的日志行数: " col_number
-                str1="开始查询节点topmining_zktube_"
+                str1="开始查询节点zktube_"
                 str2=${node_number}
                 str3="日志: "
                 echo $str1${str2}$str3
-                docker logs --tail ${col_number} topmining_zktube_${node_number} 
+                docker logs --tail ${col_number} zktube_${node_number} 
         fi
 }
 
 check_logs_all() {
-        node_count=`docker ps --filter="name=topmining_zktube_" | wc -l`
+        node_count=`docker ps --filter="name=zktube_" | wc -l`
         if [ ${node_count} = "0" ]; then
                 echo "-----------------------------------------------------"
             echo "尚未部署专供zkTube节点,请部署后再执行此操作!"
@@ -161,7 +161,7 @@ check_logs_all() {
                         str2=${i}
                         str3="日志: "
                         echo ${str1}${str2}${str3}
-                docker logs --tail ${col_number} topmining_zktube_${i} 
+                docker logs --tail ${col_number} zktube_${i} 
                 sleep 2
                 done
         fi
@@ -179,7 +179,7 @@ delete_revenue_address() {
                 fi
 }
 delete_zktnode_all() {
-        node_count1=`docker ps -a --filter="name=topmining_zktube_" | wc -l`
+        node_count1=`docker ps -a --filter="name=zktube_" | wc -l`
         if [ ${node_count1} = "0" ]; then
                 echo "-----------------------------------------------------"
             echo "未部署专供zkTube节点,无需删除!"
@@ -187,20 +187,20 @@ delete_zktnode_all() {
         else
                 echo "-----------------------------------------------------"
                 echo "当前运行中的专供zkTube节点为: "
-                docker ps --filter="name=topmining_zktube_"
-                node_count2=`docker ps --filter="name=topmining_zktube_" | wc -l`
+                docker ps --filter="name=zktube_"
+                node_count2=`docker ps --filter="name=zktube_" | wc -l`
                 read -p "是否确认彻底删除全部zkTube节点(输入Y开始删除，输入N取消删除): " delete_node
                 if [ ${delete_node} = "Y" -o ${delete_node} = "y" ]; then
                         for ((i=1; i<=node_count2 - 1; i ++))
                         do
                                 echo "-----------------------------------------------------"
-                    str1="开始删除zkTube节点topmining_zktube_"
+                    str1="开始删除zkTube节点zktube_"
                     str2=${i}
                     str3="： "
                     echo ${str1}${str2}${str3}
-                    docker stop topmining_zktube_${i}
-                    docker rm topmining_zktube_${i}
-                    str4="zkTube节点topmining_zktube_"
+                    docker stop zktube_${i}
+                    docker rm zktube_${i}
+                    str4="zkTube节点zktube_"
                     str5=${i}
                     str6="已成功删除!"
                     echo ${str4}${str5}${str6}
@@ -214,11 +214,11 @@ delete_zktnode_all() {
 }
 
 delete_tpm_image() {
-        node_count1=`docker ps -a --filter="name=topmining_zktube_" | wc -l`
+        node_count1=`docker ps -a --filter="name=zktube_" | wc -l`
         if [ ${node_count1} != "0" ]; then
                 echo "-----------------------------------------------------"
             echo "以下专供zkTube节点尚未删除，请先删除节点后再执行镜像删除操作!"
-            docker ps -a --filter="name=topmining_zktube_"
+            docker ps -a --filter="name=zktube_"
             all
         else
                 echo "-----------------------------------------------------"
