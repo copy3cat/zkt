@@ -77,7 +77,7 @@ modify_revenue_address() {
 }
 
 deploy_zktnode() {
-        image_count=`docker image ls | grep topmininglabs/zktube-prover | wc -l`
+        image_count=`docker image ls | grep topmininglabs/zktube-image | wc -l`
         if [ ${image_count} = "0" ]; then
                 echo "-----------------------------------------------------"
             echo "尚未下载专供镜像，请先下载后再执行次操作!"
@@ -94,7 +94,7 @@ deploy_zktnode() {
                         do
                                 echo "-----------------------------------------------------"
                                 echo "开始部署专供zkTube新节点: "
-                                docker run -d -v ~/zktube/.revenue_address:/revenue_address --restart always --name zktube_${i} topmininglabs/zktube-prover:latest
+                                docker run -d -v ~/zktube/.revenue_address:/revenue_address --restart always --name zktube_${i} topmininglabs/zktube-image:latest
                                 echo "-----------------------------------------------------"
                                 str1="zkTube节点zktube_"
                                 str2=${i}
@@ -223,7 +223,7 @@ delete_tpm_image() {
                 echo "-----------------------------------------------------"
                 echo "当前运行中的Docker镜像文件为: "
                 docker image ls
-                image_count=`docker image ls | grep topmininglabs/zktube-prover | wc -l`
+                image_count=`docker image ls | grep topmininglabs/zktube-image | wc -l`
                 if [ ${image_count} = "0" ]; then
                         echo "-----------------------------------------------------"
                 echo "尚未下载专供镜像，无需执行次操作!"
@@ -233,7 +233,7 @@ delete_tpm_image() {
                 if [ ${delete_image} = "Y" -o ${delete_image} = "y" ]; then
                                 echo "-----------------------------------------------------"
                         echo "开始删除专供zkTube镜像: "
-                        docker rmi topmininglabs/zktube-prover:latest
+                        docker rmi topmininglabs/zktube-image:latest
                         echo "已彻底删除专供zkTube镜像!"
                         docker image ls
                 else
