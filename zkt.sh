@@ -28,7 +28,7 @@ install_docker(){
 }
 
 downloadd_tpm_image() {
-        image_count=`docker image ls | grep topmininglabs/zktube-prover | wc -l`
+        image_count=`docker image ls | topmininglabs/zktube-image | wc -l`
         if [ ${image_count} != "0" ]; then
                 echo "-----------------------------------------------------"
             echo "已下载专供镜像，无需操作!"
@@ -36,10 +36,10 @@ downloadd_tpm_image() {
         else
             echo "-----------------------------------------------------"
             echo "开始下载/更新专供zkTube最新镜像: "
-            docker pull topmininglabs/zktube-prover:latest
+            docker pull topmininglabs/zktube-image:latest
             echo "-----------------------------------------------------"
             docker image ls
-            image_count=`docker image ls | grep topmininglabs/zktube-prover | wc -l`
+            image_count=`docker image ls | grep topmininglabs/zktube-image | wc -l`
             if [ ${image_count} != "0" ]; then
                 echo "-----------------------------------------------------"
                 echo "专供zkTube最新镜像已下载/更新完成!"
