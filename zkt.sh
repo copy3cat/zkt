@@ -28,7 +28,7 @@ install_docker(){
 }
 
 downloadd_tpm_image() {
-        image_count=`docker image ls | topmininglabs/zktube-image | wc -l`
+        image_count=`docker image ls | grep topmininglabs/zktube-image | wc -l`
         if [ ${image_count} != "0" ]; then
                 echo "-----------------------------------------------------"
             echo "已下载专供镜像，无需操作!"
